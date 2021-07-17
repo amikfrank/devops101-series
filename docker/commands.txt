@@ -29,3 +29,12 @@ Viewing Logs of any Docker Container
 $ docker logs -f <container_name>
 
 Here, -f command will follow the ongoing logs
+
+
+Using Volumes in Docker
+
+$ docker run -d --name devtest -v myvol2:/app nginx:latest
+
+Using Bind Mount in Docker
+
+$ docker run -d -it --name devtest -v "$(pwd)"/target:/app nginx:latest
