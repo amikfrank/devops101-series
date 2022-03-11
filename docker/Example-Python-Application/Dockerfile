@@ -1,17 +1,15 @@
-# We are using python as base image
-FROM python:3
+FROM python:3.7-alpine
 
-# Installing gunicorn flask
-RUN pip install gunicorn flask
+RUN mkdir /app
 
-# Adding the Python Code to the Image
-ADD mainapp.py wsgi.py /app/
-
-# Exposing the port on which application will be exposed
-EXPOSE 5000
-
-# Changing the working directory of Container to be /app
 WORKDIR /app
 
+ADD requirements.txt /app
 
-ENTRYPOINT [ "gunicorn","--bind","0.0.0.0:5000","wsgi:app" ]
+ADD main.py /app
+
+RUN pip3 install -r requirements.txt
+
+EXPOSE 8000
+
+CMD ["gunicorn", "-w 4", "-b", "0.0.0.0:8000", "main:app"]
